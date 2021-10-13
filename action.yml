@@ -1,0 +1,43 @@
+name: Deposit with Open Journals API call
+description: Deposit with Open Journals and Crossref
+inputs:
+  journal_url:
+    description: The url of the journal
+    required: true
+  journal_secret:
+    description: The access token to be used to upload files
+    required: true
+  issue_id:
+    description: The issue number of the submission
+    required: true
+  reviews_repo:
+    description: The repository where the reviews are taking place, in 'org/repo' format
+    required: false
+  paper_path:
+    description: The complete filepath of the paper.md file
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0.2
+        bundler-cache: true
+        cache-version: deposit-with-oj
+        bundler: Gemfile.lock
+        working-directory: ${{ github.action_path }}
+    - name: Deposit with Open Journals
+      shell: bash
+      env:
+        JOURNAL_URL: ${{ inputs.journal_url }}
+        JOURNAL_SECRET: ${{ inputs.journal_secret }}
+        ISSUE_ID: ${{ inputs.issue_id }}
+        REVIEWS_REPO: ${{ inputs.reviews_repository }}
+        PAPER_PATH: ${{ inputs.paper_path }}
+        BUNDLE_GEMFILE: ${{ github.action_path }}/Gemfile
+      run: |
+        bundle exec ruby ${{ github.action_path }}/deposit_with_openjournals.rb
+branding:
+  icon: upload-cloud
+  color: green
