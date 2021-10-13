@@ -1,5 +1,5 @@
-name: Deposit with Open Journals API call
-description: Deposit with Open Journals
+name: Deposit with Open Journals
+description: Deposit with Open Journals API call
 inputs:
   journal_url:
     description: The url of the journal
