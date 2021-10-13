@@ -1,5 +1,5 @@
 name: Deposit with Open Journals API call
-description: Deposit with Open Journals and Crossref
+description: Deposit with Open Journals
 inputs:
   journal_url:
     description: The url of the journal
