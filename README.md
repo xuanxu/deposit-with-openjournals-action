@@ -10,10 +10,9 @@ Usually this action is used as a step in a workflow after the paper's pdf and xm
 
 The action accepts the following inputs:
 
-- **journal_url**: Required. The url of the journal.
-- **journal_secret**: Required. The access token to be used to upload files
-- **issue_id**: Required. The issue number of the submission
-- **reviews_repo**: Required. The repository where the reviews are taking place, in 'org/repo' format
+- **journal_alias**: Required. The alias of the Open Journal to deposit with
+- **journal_secret**: Required. The access token to be used to post the paper payload
+- **issue_id**: Required. The issue number of the submission in the reviews repository
 - **paper_path**: Required. The complete filepath of the paper.md file
 
 ### Example
@@ -36,6 +35,5 @@ jobs:
           journal_url: https://joss.theoj.org/
           journal_secret: ${{ secrets.JOURNAL_SECRET }}
           issue_id: ${{ github.event.inputs.issue_id }}
-          reviews_repo: openjournals/joss-reviews
           paper_path: ./docs/paper.md
 ```
