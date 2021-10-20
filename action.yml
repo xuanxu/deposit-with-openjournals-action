@@ -1,8 +1,8 @@
 name: Deposit with Open Journals
 description: Deposit with Open Journals API call
 inputs:
-  journal_url:
-    description: The url of the journal
+  journal_alias:
+    description: The alias of the Open Journal to deposit with
     required: true
   journal_secret:
     description: The access token to be used to upload files
@@ -10,9 +10,6 @@ inputs:
   issue_id:
     description: The issue number of the submission
     required: true
-  reviews_repo:
-    description: The repository where the reviews are taking place, in 'org/repo' format
-    required: false
   paper_path:
     description: The complete filepath of the paper.md file
     required: false
@@ -30,10 +27,9 @@ runs:
     - name: Deposit with Open Journals
       shell: bash
       env:
-        JOURNAL_URL: ${{ inputs.journal_url }}
+        JOURNAL_ALIAS: ${{ inputs.journal_alias }}
         JOURNAL_SECRET: ${{ inputs.journal_secret }}
         ISSUE_ID: ${{ inputs.issue_id }}
-        REVIEWS_REPO: ${{ inputs.reviews_repository }}
         PAPER_PATH: ${{ inputs.paper_path }}
         BUNDLE_GEMFILE: ${{ github.action_path }}/Gemfile
       run: |

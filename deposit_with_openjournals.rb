@@ -1,32 +1,20 @@
-require "faraday"
 require "theoj"
 
 issue_id = ENV["ISSUE_ID"]
 paper_path = ENV["PAPER_PATH"].to_s
-journal_url = "#{ENV['JOURNAL_URL']}/papers/api_deposit",
+journal_alias = ENV['JOURNAL_ALIAS']
 journal_secret = ENV['JOURNAL_SECRET']
 
-paper = Theoj::Paper.new()
-if paper_path.empty?
-  issue = Theoj::ReviewIssue.new(issue_id)
-else
-  paper = Theoj::Paper.new("", "", paper_path)
-end
+journal = Theoj::Journal.new(Theoj::JOURNALS_DATA[journal_alias.to_sym])
+issue = Theoj::ReviewIssue.new(journal.data[:reviews_repository], issue_id)
+issue.paper = Theoj::Paper.new("", "", paper_path) unless paper_path.empty?
 
+submission = Theoj::Submission.new(journal, issue, issue.paper)
 
+deposit_call = submission.deposit!(journal_secret)
 
-parameters = { id: issue_id
-               #metadata: Base64.encode64(deposit_payload.to_json),
-               #doi: formatted_doi,
-               #archive_doi: archive_doi,
-               #citation_string: citation_string,
-               title: paper.title,
-               secret: journal_secret
-              }
-
-deposit_call = Faraday.post(url, parameters.to_json, {})
 if deposit_call.status.between?(200, 299)
   system("echo 'Journal responded. Deposit looks good'")
 else
-  raise "!! ERROR: Something went wrong with this deposit when calling #{journal_url}"
+  raise "!! ERROR: Something went wrong with this deposit when calling #{journal.data[:deposit_url]}"
 end
