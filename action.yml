@@ -13,6 +13,10 @@ inputs:
   paper_path:
     description: The complete filepath of the paper.md file
     required: false
+outputs:
+  paper_doi:
+    description: "DOI of the deposited paper"
+    value: ${{ steps.theoj-deposit.outputs.paper_doi }}
 runs:
   using: "composite"
   steps:
@@ -25,6 +29,7 @@ runs:
         bundler: Gemfile.lock
         working-directory: ${{ github.action_path }}
     - name: Deposit with Open Journals
+      id: theoj-deposit
       shell: bash
       env:
         JOURNAL_ALIAS: ${{ inputs.journal_alias }}

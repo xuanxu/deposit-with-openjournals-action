@@ -15,6 +15,10 @@ The action accepts the following inputs:
 - **issue_id**: Required. The issue number of the submission in the reviews repository
 - **paper_path**: Required. The complete filepath of the paper.md file
 
+### Outputs
+
+- **paper_doi**: The DOI for the accepted paper
+
 ### Example
 
 Use it adding it as a step in a workflow `.yml` file in your repo's `.github/workflows/` directory and passing your custom input values.
