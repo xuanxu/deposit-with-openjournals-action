@@ -15,7 +15,7 @@ deposit_call = submission.deposit!(journal_secret)
 
 if deposit_call.status.between?(200, 299)
   system("echo 'Journal responded. Deposit looks good'")
-  system("echo '::set-output name=paper_doi::#{submission.paper_doi}'")
+  system("echo 'paper_doi=#{submission.paper_doi}' >> $GITHUB_OUTPUT")
 else
   system("echo 'CUSTOM_ERROR=Could not deposit with Open Journals.' >> $GITHUB_ENV")
   raise "!! ERROR: Something went wrong with this deposit when calling #{journal.data[:deposit_url]}"
