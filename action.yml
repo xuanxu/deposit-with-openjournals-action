@@ -5,7 +5,7 @@ inputs:
     description: The alias of the Open Journal to deposit with
     required: true
   journal_secret:
-    description: The access token to be used to upload files
+    description: The access token to be used to deposit the paper with the journal
     required: true
   issue_id:
     description: The issue number of the submission
